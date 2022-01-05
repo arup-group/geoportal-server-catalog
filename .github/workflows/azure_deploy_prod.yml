@@ -1,0 +1,42 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Deploy release version to Azure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      ref: 'production'
+      
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+    
+    - name: Build Redirecter with Maven
+      run: mvn -B package --file pom.xml
+      working-directory: redirector
+
+    - name: Build GeoPortal with Maven
+      run: mvn -B package --file pom.xml
+      working-directory: geoportal
+      
+    - name: Deploy GeoPortal Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: 'arup-esri-geoportal-prod-web'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
+        package: geoportal/target/*.war
+    
+    - name: Deploy Redirecter Azure WebApp
+      uses: Azure/webapps-deploy@v2
+      with:
+        app-name: 'arup-esri-geoportal-prod-web'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE_PROD }}
+        package: redirector/target/ROOT.war

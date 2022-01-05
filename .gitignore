@@ -1,6 +1,7 @@
 geoportal/target/
 geoportal-search/target/
 geoportal-search/Projects/
+redirector/target/
 
 node_modules/
 ignore/
