@@ -11,8 +11,8 @@
     <beans:property name="authorizeUrl" value="${arcgis_authorizeUrl:https://www.arcgis.com/sharing/rest/oauth2/authorize}"/>
     <beans:property name="createAccountUrl" value="${arcgis_createAccountUrl:https://www.arcgis.com/home/createaccount.html}"/>
     <beans:property name="expirationMinutes" value="120" />
-    <beans:property name="geoportalAdministratorsGroupId" value="" />
-    <beans:property name="geoportalPublishersGroupId" value="" />
+    <beans:property name="geoportalAdministratorsGroupId" value="${arcgis_admingroupid:}" />
+    <beans:property name="geoportalPublishersGroupId" value="${arcgis_pubgroupid:}" />
     <beans:property name="allUsersCanPublish" value="true" />
     <beans:property name="rolePrefix" value="ROLE_" />
     <beans:property name="showMyProfileLink" value="${arcgis_showMyProfileLink:true}" />
